@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>generador de fuentes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .contenedor {
+            width: 100%;
+            max-width: 500px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .input-box {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #2a2a2a;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #555;
+        }
+
+        .resultados {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .caja {
+            background: #252525;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .texto {
+            font-size: 1.1rem;
+            word-break: break-all;
+            flex: 1;
+        }
+
+        button {
+            background: #3a3a3a;
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        button:hover {
+            background: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <h1>generador de fuentes</h1>
+
+        <div class="input-box">
+            <input type="text" id="input" placeholder="escribe algo aqui..." autocomplete="off">
+        </div>
+
+        <div class="resultados">
+            <div class="caja">
+                <div class="texto" id="out-small"></div>
+                <button onclick="copiar('out-small', this)">copiar</button>
+            </div>
+
+            <div class="caja">
+                <div class="texto" id="out-math"></div>
+                <button onclick="copiar('out-math', this)">copiar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.getElementById('input');
+        const outSmall = document.getElementById('out-small');
+        const outMath = document.getElementById('out-math');
+
+        const mapaSmallCaps = {
+            'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ғ', 'g': 'ɢ',
+            'h': 'ʜ', 'i': 'ɪ', 'j': 'ᴊ', 'k': 'ᴋ', 'l': 'ʟ', 'm': 'ᴍ', 'n': 'ɴ',
+            'o': 'ᴏ', 'p': 'ᴘ', 'q': 'ǫ', 'r': 'ʀ', 's': 's', 't': 'ᴛ', 'u': 'ᴜ',
+            'v': 'ᴠ', 'w': 'ᴡ', 'x': 'x', 'y': 'ʏ', 'z': 'ᴢ'
+        };
+
+        function convertirSmall(txt) {
+            return txt.toLowerCase().split('').map(c => mapaSmallCaps[c] || c).join('');
+        }
+
+        function convertirMath(txt) {
+            return txt.split('').map(c => {
+                const code = c.charCodeAt(0);
+                if (code >= 65 && code <= 90) return String.fromCodePoint(0x1D63C + (code - 65));
+                if (code >= 97 && code <= 122) return String.fromCodePoint(0x1D656 + (code - 97));
+                return c;
+            }).join('');
+        }
+
+        function actualizar() {
+            const val = input.value;
+            outSmall.textContent = convertirSmall(val);
+            outMath.textContent = convertirMath(val);
+        }
+
+        function copiar(id, btn) {
+            const txt = document.getElementById(id).textContent;
+            if (!txt) return;
+            navigator.clipboard.writeText(txt).then(() => {
+                btn.textContent = 'copiado!';
+                setTimeout(() => {
+                    btn.textContent = 'copiar';
+                }, 1000);
+            });
+        }
+
+        input.addEventListener('input', actualizar);
+    </script>
+</body>
+</html>

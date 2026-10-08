@@ -33,8 +33,15 @@
 
         h1 {
             font-size: 1.4rem;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             text-align: center;
+        }
+
+        .contador {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 15px;
         }
 
         .input-box {
@@ -108,6 +115,7 @@
 
     <div class="contenedor">
         <h1>generador de fuentes</h1>
+        <div class="contador" id="contador">visitas: 0</div>
 
         <div class="input-box">
             <input type="text" id="input" placeholder="escribe algo aqui..." autocomplete="off">
@@ -136,6 +144,16 @@
         const input = document.getElementById('input');
         const outSmall = document.getElementById('out-small');
         const outMath = document.getElementById('out-math');
+        const contadorElem = document.getElementById('contador');
+
+        let visitas = localStorage.getItem('visitas_pagina');
+        if (!visitas) {
+            visitas = 1;
+        } else {
+            visitas = parseInt(visitas) + 1;
+        }
+        localStorage.setItem('visitas_pagina', visitas);
+        contadorElem.textContent = 'visitas: ' + visitas;
 
         const mapaSmallCaps = {
             'a': 'ᴀ', 'b': 'ʙ', 'c': 'ᴄ', 'd': 'ᴅ', 'e': 'ᴇ', 'f': 'ғ', 'g': 'ɢ',

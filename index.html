@@ -67,6 +67,17 @@
             padding: 15px;
             border-radius: 8px;
             display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nombre-font {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        .filagenerada {
+            display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 10px;
@@ -104,13 +115,19 @@
 
         <div class="resultados">
             <div class="caja">
-                <div class="texto" id="out-small"></div>
-                <button onclick="copiar('out-small', this)">copiar</button>
+                <div class="nombre-font">small caps font style</div>
+                <div class="filagenerada">
+                    <div class="texto" id="out-small"></div>
+                    <button onclick="copiar('out-small', this)">copiar</button>
+                </div>
             </div>
 
             <div class="caja">
-                <div class="texto" id="out-math"></div>
-                <button onclick="copiar('out-math', this)">copiar</button>
+                <div class="nombre-font">math sans bold italic</div>
+                <div class="filagenerada">
+                    <div class="texto" id="out-math"></div>
+                    <button onclick="copiar('out-math', this)">copiar</button>
+                </div>
             </div>
         </div>
     </div>
